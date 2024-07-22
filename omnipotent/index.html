@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>omnipotent</title>
+    <link rel="icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        header {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.2rem;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .iframe-container {
+            width: 80%;
+            height: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .proxy-controls {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #3e3e3e;
+            color: white;
+            border: none;
+        }
+        .home-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 0 20px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+        .disguise-list {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .discord-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #8e8e8e; /* Lighter color similar to background but still visible */
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="discord-info">Discord @jun251_</div>
+    <header>omnipotent</header>
+    <div class="disguise-list" id="disguiseList">
+        Disguise:
+        <select id="disguiseSelect" onchange="changeDisguise()">
+            <option value="">Select</option>
+            <option value="Google Drive">Google Drive</option>
+            <option value="Google Classroom">Google Classroom</option>
+            <option value="Desmos">Desmos</option>
+        </select>
+    </div>
+    <nav>
+        <a href="#" onclick="loadHome()">Home</a>
+        <a href="#" onclick="loadGame(0)">Shell Shockers</a>
+        <a href="#" onclick="loadGame(1)">Diep.io</a>
+        <!-- Additional game links can be added here -->
+    </nav>
+    <div class="home-content" id="homeContent">
+        Play unblocked games here, I'm still adding more games. If you're using for school, use this responsibly. btw, use the DISGUISE list above to change the icon and the title of the tab, so it looks like a school friendly site.
+    </div>
+    <div class="proxy-controls" id="proxyControls">
+        <select id="proxySelect"></select>
+        <button onclick="loadSelectedProxy()">Load Selected Proxy</button>
+    </div>
+    <div class="iframe-container">
+        <iframe src="about:blank" id="gameFrame"></iframe>
+    </div>
+    <script>
+        const games = [
+            [
+                'https://algebra.best',
+                'https://algebra.vip',
+                'https://biologyclass.club',
+                'https://deadlyegg.com',
+                'https://deathegg.life',
+                'https://deathegg.world',
+                'https://combateggs.com',
+                'https://egg.dance',
+                'https://eggboy.club',
+                'https://eggboy.me',
+                'https://eggboy.xyz',
+                'https://eggbattle.com'
+            ],
+            [
+                'https://diep.io/',
+                'https://arrax.io/',
+                'https://arras.netlify.app/'
+            ]
+        ];
+
+        function loadHome() {
+            const gameFrame = document.getElementById('gameFrame');
+            const proxyControls = document.getElementById('proxyControls');
+            const homeContent = document.getElementById('homeContent');
+            const disguiseList = document.getElementById('disguiseList');
+            const discordInfo = document.querySelector('.discord-info');
+
+            gameFrame.src = 'about:blank';
+            gameFrame.style.display = 'none';
+            proxyControls.style.display = 'none';
+            homeContent.style.display = 'flex';
+            disguiseList.style.display = 'block';
+            discordInfo.style.display = 'block';
+        }
+
+        function loadGame(index) {
+            const proxySelect = document.getElementById('proxySelect');
+            const proxyControls = document.getElementById('proxyControls');
+            const homeContent = document.getElementById('homeContent');
+            const disguiseList = document.getElementById('disguiseList');
+            const discordInfo = document.querySelector('.discord-info');
+
+            proxySelect.innerHTML = '';
+            if (index >= 0 && index < games.length) {
+                const proxies = games[index];
+                proxies.forEach((proxy) => {
+                    const option = document.createElement('option');
+                    option.value = proxy;
+                    option.textContent = proxy;
+                    proxySelect.appendChild(option);
+                });
+                proxyControls.style.display = 'flex';
+                homeContent.style.display = 'none';
+                disguiseList.style.display = 'none';
+                discordInfo.style.display = 'none';
+            } else {
+                proxyControls.style.display = 'none';
+                homeContent.style.display = 'none';
+                disguiseList.style.display = 'none';
+                discordInfo.style.display = 'none';
+            }
+        }
+
+        function loadSelectedProxy() {
+            const proxySelect = document.getElementById('proxySelect');
+            const gameFrame = document.getElementById('gameFrame');
+            const selectedProxy = proxySelect.value;
+            if (selectedProxy) {
+                gameFrame.src = selectedProxy;
+                gameFrame.style.display = 'block';
+            } else {
+                gameFrame.src = 'about:blank';
+                gameFrame.style.display = 'none';
+            }
+        }
+
+        function changeDisguise() {
+            const disguiseSelect = document.getElementById('disguiseSelect').value;
+            let title = 'omnipotent';
+            let favicon = 'favicon.ico';
+            if (disguiseSelect === 'Google Drive') {
+                title = 'Google Drive';
+                favicon = 'https://cdn.prod.website-files.com/655b60964be1a1b36c746790/655b60964be1a1b36c746d62_6091682aa77f79e6607aea8c_Google%2520Drive%2520Integration.png';
+            } else if (disguiseSelect === 'Google Classroom') {
+                title = 'Google Classroom';
+                favicon = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaHsdenJpOodwlQ8-fdM7SD8hyiFxMt5TXgw&s';
+            } else if (disguiseSelect === 'Desmos') {
+                title = 'Desmos | Graphing Calculator';
+                favicon = 'https://avatars.githubusercontent.com/u/1840620?s=280&v=4';
+            }
+            document.title = title;
+            const link = document.querySelector("link[rel~='icon']");
+            if (!link) {
+                const newLink = document.createElement('link');
+                newLink.rel = 'icon';
+                newLink.href = favicon;
+                document.head.appendChild(newLink);
+            } else {
+                link.href = favicon;
+            }
+        }
+
+        // Load home page on initial load
+        loadHome();
+    </script>
+</body>
+</html>
